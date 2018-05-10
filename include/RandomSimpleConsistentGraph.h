@@ -1,19 +1,18 @@
-#ifndef GRAPHS1_RANDOMSIMPLEGRAPH_H
-#define GRAPHS1_RANDOMSIMPLEGRAPH_H
+//
+// Created by os8 on 10.05.18.
+//
 
-#include "AdjacencyList.h"
-#include "SimpleGraph.h"
+#ifndef GRAPHS3_NEWSTRUCTURE_SIMPLEGRAPH_H
+#define GRAPHS3_NEWSTRUCTURE_SIMPLEGRAPH_H
 
 
-class RandomSimpleConsistentGraph : public SimpleGraph {
+#include "Graph.h"
+
+class RandomSimpleConsistentGraph : public Graph {
 public:
     RandomSimpleConsistentGraph();
-    std::string GenerateNumberSeries();
 
-private:
-    std::vector<int> verticlesValues;
-
-    void FillWithRandomWages();
 };
 
-#endif //GRAPHS1_RANDOMSIMPLEGRAPH_H
+
+#endif //GRAPHS3_NEWSTRUCTURE_SIMPLEGRAPH_H

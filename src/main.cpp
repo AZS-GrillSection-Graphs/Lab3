@@ -1,14 +1,10 @@
 #include <iostream>
-#include "SimpleGraph.h"
-#include "RandomSimpleConsistentGraph.h"
+#include <RandomSimpleConsistentGraph.h>
 
 int main() {
-    srand(time(0));
+    RandomSimpleConsistentGraph randomGraph;
 
-    RandomSimpleConsistentGraph graph;
-    graph.Print();
-    graph.ConvertGraph();
-    graph.DrawGraph();
+    randomGraph.Print();
 
     return 0;
 }

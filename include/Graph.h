@@ -1,28 +1,26 @@
-#ifndef GRAPHS2_GRAPH_H
-#define GRAPHS2_GRAPH_H
+//
+// Created by os8 on 10.05.18.
+//
 
-#include <string>
-#include "AdjacencyList.h"
+#ifndef GRAPHS3_GRAPH_H
+#define GRAPHS3_GRAPH_H
 
 
-class Graph
-{
+#include "AdjacencyMatrix.h"
+
+class Graph {
 public:
-    explicit Graph(const char * inputFileName);
-    explicit Graph(GraphRepresentation * inputGraphReprezentation) : m_graphRepr(inputGraphReprezentation) {}
-    explicit Graph() {};
+    explicit Graph(AdjacencyMatrix * adjacencyMatrix, std::vector<int> * edgeWeights) : m_adjacencyMatrix(adjacencyMatrix), m_edgeWeights(edgeWeights) {}
+    Graph() = default;
     ~Graph();
+
     void Print() const;
-    void ConvertGraph() const;
-    void SaveToFile(const char *fileName) const;
-    void RandomizeGraph();
-    void RandomizeGraph(const int edgeStart, const int edgeEnd);
-    int NumberOfComponents() const;
-    Graph & BiggestComponent() const;
-    void DrawGraph() const;
 
 protected:
-    GraphRepresentation * m_graphRepr;
+    AdjacencyMatrix * m_adjacencyMatrix{};
+    std::vector<int> * m_edgeWeights;
+
 };
 
-#endif
+
+#endif //GRAPHS3_GRAPH_H

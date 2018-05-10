@@ -1,44 +1,37 @@
+//
+// Created by os8 on 10.05.18.
+//
+
+#include <cstdlib>
+#include <cstdio>
+#include <ctime>
 #include "RandomSimpleConsistentGraph.h"
 
-#include <iostream>
+RandomSimpleConsistentGraph::RandomSimpleConsistentGraph() {
+    srand(time(0));
 
+    int numberOfVertices = rand() % 10 + 3;                                                                  //restrictions for tests
+    int numberOfEdges = rand() % (numberOfVertices - 1) * (numberOfVertices - 2) / 2 + (numberOfVertices - 1);
 
-RandomSimpleConsistentGraph::RandomSimpleConsistentGraph() : SimpleGraph(GenerateNumberSeries()) {
-    while(NumberOfComponents() > 1) {
-        RandomizeGraph();
-    }
+    m_adjacencyMatrix = new AdjacencyMatrix(numberOfVertices, numberOfEdges);
 
-    m_graphRepr = reinterpret_cast<AdjacencyList *>(m_graphRepr)->CovertToAdjacencyMatrix();
-    FillWithRandomWages();
+    int firstVerticle;
+    int secondVerticle;
 
-}
-
-std::string RandomSimpleConsistentGraph::GenerateNumberSeries() {
-    std::string numberSeries;
-
-    do {
-        if(!numberSeries.empty())
-            numberSeries.clear();
-
-        int numberOfVerticles = rand() % 20 + 5;        //limit for tests
-
-        for (int i = 0; i < numberOfVerticles; i++) {
-            int verticleDegree = rand() % numberOfVerticles + 1;
-
-            numberSeries += std::to_string(verticleDegree);
-            numberSeries += " ";
+    for(int i = 0; i < numberOfEdges; i++) {
+        do{
+            firstVerticle = rand() % numberOfVertices;
+            secondVerticle = rand() % numberOfVertices;
         }
+        while(firstVerticle == secondVerticle || m_adjacencyMatrix->DoesEdgeExist(firstVerticle, secondVerticle));
+
+        m_adjacencyMatrix->MakeEdge(firstVerticle, secondVerticle);
     }
-    while(!IsGraphicSeries(numberSeries));
 
-    return numberSeries;
+    m_edgeWeights = new std::vector<int>;
+
+    for(int i = 0; i < numberOfEdges; i++) {
+        int weight = rand() % 10 + 1;
+        m_edgeWeights->push_back(weight);
+    }
 }
-
-void RandomSimpleConsistentGraph::FillWithRandomWages() {
-    for(int i = 0; i < m_graphRepr->GetData().size(); i++)
-        verticlesValues.push_back(rand() % 10 + 1);
-}
-
-
-
-
