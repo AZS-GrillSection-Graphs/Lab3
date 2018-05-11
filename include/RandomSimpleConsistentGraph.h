@@ -12,6 +12,11 @@ class RandomSimpleConsistentGraph : public Graph {
 public:
     RandomSimpleConsistentGraph();
 
+private:
+    std::vector<int> Components();
+    void Components_R(const int componentNumber, const int index, std::vector<int> &componentsOfVerticles);
+    int NumberOfComponents();
+
 };
 
 

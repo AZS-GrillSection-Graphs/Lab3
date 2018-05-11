@@ -12,9 +12,11 @@ public:
     AdjacencyMatrix(const int numberOfVerices, const int numberOfEdges);
 
     void Print() const;
+    bool DoesEdgeExist(const int firstVertex, const int secondVertex) const;
+    int GetNumberOfVertices() const {return m_matrix.size();}
+    int GetIndexOfEdge(const int firstVertex, const int secondVertex) const;
 
-    bool DoesEdgeExist(const int firstVerticle, const int secondVerticle) const;
-    void MakeEdge(const int firstVerticle, const int secondVerticle);
+    void MakeEdge(const int firstVertex, const int secondVertex);
 
 private:
     std::vector<std::vector<int>> m_matrix;

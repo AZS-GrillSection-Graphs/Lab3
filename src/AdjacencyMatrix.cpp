@@ -25,21 +25,24 @@ void AdjacencyMatrix::Print() const {
     }
 }
 
-bool AdjacencyMatrix::DoesEdgeExist(const int firstVerticle, const int secondVerticle) const {
-    for(int i = 0; i < m_matrix[firstVerticle].size(); i++)
-        if(m_matrix[firstVerticle][i])
-            if(m_matrix[secondVerticle][i])
+bool AdjacencyMatrix::DoesEdgeExist(const int firstVertex, const int secondVertex) const {
+    if(firstVertex == secondVertex)
+        return false;
+
+    for(int i = 0; i < m_matrix[firstVertex].size(); i++)
+        if(m_matrix[firstVertex][i])
+            if(m_matrix[secondVertex][i])
                 return true;
 
     return false;
 }
 
-void AdjacencyMatrix::MakeEdge(const int firstVerticle, const int secondVerticle) {
+void AdjacencyMatrix::MakeEdge(const int firstVertex, const int secondVertex) {
     int notConnectedEdge = FindNotConnectedEdge();
 
     if(notConnectedEdge >= 0) {
-        m_matrix[firstVerticle][notConnectedEdge] = 1;
-        m_matrix[secondVerticle][notConnectedEdge] = 1;
+        m_matrix[firstVertex][notConnectedEdge] = 1;
+        m_matrix[secondVertex][notConnectedEdge] = 1;
     }
 }
 
@@ -64,4 +67,14 @@ int AdjacencyMatrix::FindNotConnectedEdge() const {
     }
 
     return notConnectedEdge;
+}
+
+int AdjacencyMatrix::GetIndexOfEdge(const int firstVertex, const int secondVertex) const {
+    if(!DoesEdgeExist(firstVertex, secondVertex))
+        return -1;
+
+    for(int i = 0; i < m_matrix[firstVertex].size(); i++)
+        if(m_matrix[firstVertex][i])
+            if(m_matrix[secondVertex][i])
+                return i;
 }
