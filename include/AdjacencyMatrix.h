@@ -16,13 +16,16 @@ public:
     int GetNumberOfVertices() const {return m_matrix.size();}
     int GetIndexOfEdge(const int firstVertex, const int secondVertex) const;
 
+    void RandomizeEdges();
     void MakeEdge(const int firstVertex, const int secondVertex);
+    void ResetMatrix();
 
 private:
     std::vector<std::vector<int>> m_matrix;
 
     int FindNotConnectedEdge() const;
-
+    int GetStartOfEdge(int firstEdge) const;
+    int GetEndOfEdge(int firstEdge, int startOfFirstEdge) const;
 };
 
 

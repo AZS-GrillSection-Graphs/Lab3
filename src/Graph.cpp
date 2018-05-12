@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <stdio.h>
 #include "Graph.h"
 
 
@@ -89,7 +90,7 @@ void Graph::Relax(std::vector<int> &costArray, std::vector<int> &predecessorsArr
 void Graph::PrintPaths(const int chosenVertex, std::vector<int> &costArray, std::vector<int> &predecessorsArray) const {
     std::cout << std::endl;
     for(int i = 0; i < m_adjacencyMatrix->GetNumberOfVertices(); i++) {
-        std::cout << "Path to vertex " << i << ": ";
+        printf("Path to vertex %2d (cost:%2d): ", i, costArray[i]);
 
         int currentVertex = i;
 
@@ -109,7 +110,7 @@ void Graph::PrintPaths(const int chosenVertex, std::vector<int> &costArray, std:
             currentVertex = predecessorsArray[currentVertex];
         }
 
-        std::cout << "\t\tcost:" << costArray[i] << std::endl;
+        std::cout << std::endl;
     }
 
 }
@@ -121,7 +122,8 @@ void Graph::PrintCostMatrix(){
 
     for(int i = 0; i < costMatrix.size(); i++) {
         for(int j = 0; j < costMatrix[i].size(); j++)
-            std::cout << costMatrix[i][j] << " ";
+            printf("%-2d  ", costMatrix[i][j]);
+
         std::cout << std::endl;
     }
 }

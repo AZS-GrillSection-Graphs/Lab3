@@ -19,7 +19,7 @@ AdjacencyMatrix::AdjacencyMatrix(const int numberOfVerices, const int numberOfEd
 void AdjacencyMatrix::Print() const {
     for(int i = 0; i < m_matrix.size(); i++) {
         for(int j = 0; j < m_matrix[i].size(); j++)
-            std::cout << m_matrix[i][j] << " ";
+            std::cout << m_matrix[i][j] << "  ";
 
         std::cout << std::endl;
     }
@@ -77,4 +77,62 @@ int AdjacencyMatrix::GetIndexOfEdge(const int firstVertex, const int secondVerte
         if(m_matrix[firstVertex][i])
             if(m_matrix[secondVertex][i])
                 return i;
+}
+
+void AdjacencyMatrix::RandomizeEdges() {
+    int firstEdge = rand() % m_matrix[0].size();
+    int secondEdge = rand() % m_matrix[0].size();
+
+    if(firstEdge == secondEdge)
+        return;
+
+    //first
+    int startOfFirstEdge = GetStartOfEdge(firstEdge);
+    int endOfFirstEdge = GetEndOfEdge(firstEdge, startOfFirstEdge);
+
+    //second
+    int startOfSecondEdge = GetStartOfEdge(secondEdge);
+    int endOfSecondEdge = GetEndOfEdge(secondEdge, startOfSecondEdge);
+
+    if(DoesEdgeExist(startOfFirstEdge, endOfSecondEdge) || startOfFirstEdge == endOfSecondEdge)
+        return;
+
+    if(DoesEdgeExist(startOfFirstEdge, endOfSecondEdge) || startOfSecondEdge == endOfFirstEdge)
+        return;
+
+    m_matrix[endOfFirstEdge][firstEdge] = 0;
+    m_matrix[endOfSecondEdge][firstEdge] = 1;
+
+    m_matrix[endOfSecondEdge][secondEdge] = 0;
+    m_matrix[endOfFirstEdge][secondEdge] = 1;
+
+}
+
+int AdjacencyMatrix::GetEndOfEdge(int firstEdge, int startOfFirstEdge) const {
+    int endOfFirstEdge;
+    for(int i = startOfFirstEdge + 1; i < m_matrix.size(); i++) {
+        if(m_matrix[i][firstEdge]) {
+            endOfFirstEdge = i;
+            break;
+        }
+    }
+    return endOfFirstEdge;
+}
+
+int AdjacencyMatrix::GetStartOfEdge(int firstEdge) const {
+    int startOfFirstEdge;
+    for(int i = 0; i < m_matrix.size(); i++) {
+        if(m_matrix[i][firstEdge]) {
+            startOfFirstEdge = i;
+            break;
+        }
+    }
+    return startOfFirstEdge;
+}
+
+void AdjacencyMatrix::ResetMatrix() {
+    for(int i = 0; i < m_matrix.size(); i++) {
+        for(int j = 0; j < m_matrix[i].size(); j++)
+            m_matrix[i][j] = 0;
+    }
 }

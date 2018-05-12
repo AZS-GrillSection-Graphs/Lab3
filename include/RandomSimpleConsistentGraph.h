@@ -16,7 +16,8 @@ private:
     std::vector<int> Components();
     void Components_R(const int componentNumber, const int index, std::vector<int> &componentsOfVerticles);
     int NumberOfComponents();
-
+    void RandomlyFillAdjacencyMatrix(int numberOfVertices, int numberOfEdges);
+    void GenerateRandomWeights(int numberOfEdges) const;
 };
 
 
