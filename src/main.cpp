@@ -9,6 +9,7 @@ int main() {
 //    randomGraph.PrintCostMatrix();
 //    std::cout << "The center of graph is: " << randomGraph.FindGraphCenter() << std::endl;
 //    std::cout << "The minimax center of graph is: " << randomGraph.FindMinimaxGraphCenter() << std::endl;
+    randomGraph.DrawOnScreen();
     randomGraph.PrimWithPrint(0);
 
     return 0;

@@ -6,15 +6,17 @@
 #define GRAPHS3_GRAPH_H
 
 
-#include "AdjacencyMatrix.h"
+#include <vector>
+#include "IncidenceMatrix.h"
 
 class Graph {
 public:
-    explicit Graph(AdjacencyMatrix * adjacencyMatrix, std::vector<int> * edgeWeights) : m_adjacencyMatrix(adjacencyMatrix), m_edgeWeights(edgeWeights) {}
+    explicit Graph(IncidenceMatrix * adjacencyMatrix, std::vector<int> * edgeWeights) : m_incidenceMatrix(adjacencyMatrix), m_edgeWeights(edgeWeights) {}
     Graph() = default;
     ~Graph();
 
     void Print() const;
+    void DrawOnScreen() const;
     void DijkstraWithPrint(const int chosenVertex);
     void PrintCostMatrix();
     int FindGraphCenter();
@@ -22,7 +24,7 @@ public:
     void PrimWithPrint(const int choosenVertex);
 
 protected:
-    AdjacencyMatrix * m_adjacencyMatrix;
+    IncidenceMatrix * m_incidenceMatrix;
     std::vector<int> * m_edgeWeights;
 
     void FindNeighbors(int nearestVertex, std::vector<int> &neighbors) const;
@@ -32,7 +34,13 @@ protected:
     void Relax(std::vector<int> &costArray, std::vector<int> &predecessorsArray, const int firstVertex, const int secondVertex);
     std::vector<std::vector<int>> SetCostMatrix();
     std::vector<int> Dijkstra(const int chosenVertex);
+
     int GetLightestEdge(std::vector<int> &visited, std::vector<std::vector<int>> &adjacencyMatrix);
+    void UpdateMST(std::vector<std::vector<int>> &minimalSpanningTree, const int *connectedVertices);
+    bool isVisited(std::vector<int> &visited, const int vertex) const;
+    void printMST(const std::vector<std::vector<int>> &minimalSpanningTree) const;
+    void SaveMSTToFile(const char string[22], std::vector<std::vector<int>> vector1);
+    void DrawMSTOnScreen();
 };
 
 

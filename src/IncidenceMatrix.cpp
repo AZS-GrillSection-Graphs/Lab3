@@ -1,12 +1,8 @@
-//
-// Created by os8 on 10.05.18.
-//
-
-#include "AdjacencyMatrix.h"
-
+#include "IncidenceMatrix.h"
 #include <iostream>
+#include <fstream>
 
-AdjacencyMatrix::AdjacencyMatrix(const int numberOfVerices, const int numberOfEdges) {
+IncidenceMatrix::IncidenceMatrix(const int numberOfVerices, const int numberOfEdges) {
     for(int i = 0; i < numberOfVerices; i++) {
         std::vector<int> column;
         for(int j = 0; j < numberOfEdges; j++)
@@ -16,7 +12,7 @@ AdjacencyMatrix::AdjacencyMatrix(const int numberOfVerices, const int numberOfEd
     }
 }
 
-void AdjacencyMatrix::Print() const {
+void IncidenceMatrix::Print() const {
     std::cout << "V\\E\t";
     for(int j = 0; j < m_matrix[0].size(); j++)
         std::cout << j << " \t";
@@ -33,7 +29,32 @@ void AdjacencyMatrix::Print() const {
     }
 }
 
-bool AdjacencyMatrix::DoesEdgeExist(const int firstVertex, const int secondVertex) const {
+void IncidenceMatrix::SaveToFile(const char *fileName) const {
+    std::ofstream file;
+
+    if (!file.is_open())
+    {
+        file.open(fileName, std::ios::out);
+        if(!file)
+        {
+            std::cerr << "Failed to open " << fileName << std::endl;
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    file << "MI" << std::endl;
+    const int verticesNumber = m_matrix.size();
+    const int edgesNumber = m_matrix[0].size();
+    for(int i = 0; i < verticesNumber; i++) {
+        for(int j = 0; j < edgesNumber; j++)
+            file << m_matrix[i][j] << "\t";
+        file << std::endl;
+    }
+
+    file.close();
+}
+
+bool IncidenceMatrix::DoesEdgeExist(const int firstVertex, const int secondVertex) const {
     if(firstVertex == secondVertex)
         return false;
 
@@ -45,7 +66,7 @@ bool AdjacencyMatrix::DoesEdgeExist(const int firstVertex, const int secondVerte
     return false;
 }
 
-void AdjacencyMatrix::MakeEdge(const int firstVertex, const int secondVertex) {
+void IncidenceMatrix::MakeEdge(const int firstVertex, const int secondVertex) {
     int notConnectedEdge = FindNotConnectedEdge();
 
     if(notConnectedEdge >= 0) {
@@ -54,7 +75,7 @@ void AdjacencyMatrix::MakeEdge(const int firstVertex, const int secondVertex) {
     }
 }
 
-int AdjacencyMatrix::FindNotConnectedEdge() const {
+int IncidenceMatrix::FindNotConnectedEdge() const {
     bool isClear = true;
     int notConnectedEdge = -1;
 
@@ -77,7 +98,7 @@ int AdjacencyMatrix::FindNotConnectedEdge() const {
     return notConnectedEdge;
 }
 
-int AdjacencyMatrix::GetIndexOfEdge(const int firstVertex, const int secondVertex) const {
+int IncidenceMatrix::GetIndexOfEdge(const int firstVertex, const int secondVertex) const {
     if(!DoesEdgeExist(firstVertex, secondVertex))
         return -1;
 
@@ -87,7 +108,7 @@ int AdjacencyMatrix::GetIndexOfEdge(const int firstVertex, const int secondVerte
                 return i;
 }
 
-void AdjacencyMatrix::RandomizeEdges() {
+void IncidenceMatrix::RandomizeEdges() {
     int firstEdge = rand() % m_matrix[0].size();
     int secondEdge = rand() % m_matrix[0].size();
 
@@ -115,7 +136,7 @@ void AdjacencyMatrix::RandomizeEdges() {
     m_matrix[endOfFirstEdge][secondEdge] = 1;
 }
 
-int AdjacencyMatrix::GetEndOfEdge(int firstEdge, int startOfFirstEdge) const {
+int IncidenceMatrix::GetEndOfEdge(int firstEdge, int startOfFirstEdge) const {
     int endOfFirstEdge;
     for(int i = startOfFirstEdge + 1; i < m_matrix.size(); i++) {
         if(m_matrix[i][firstEdge]) {
@@ -126,7 +147,7 @@ int AdjacencyMatrix::GetEndOfEdge(int firstEdge, int startOfFirstEdge) const {
     return endOfFirstEdge;
 }
 
-int AdjacencyMatrix::GetStartOfEdge(int firstEdge) const {
+int IncidenceMatrix::GetStartOfEdge(int firstEdge) const {
     int startOfFirstEdge;
     for(int i = 0; i < m_matrix.size(); i++) {
         if(m_matrix[i][firstEdge]) {
@@ -137,14 +158,14 @@ int AdjacencyMatrix::GetStartOfEdge(int firstEdge) const {
     return startOfFirstEdge;
 }
 
-void AdjacencyMatrix::ResetMatrix() {
+void IncidenceMatrix::ResetMatrix() {
     for(int i = 0; i < m_matrix.size(); i++) {
         for(int j = 0; j < m_matrix[i].size(); j++)
             m_matrix[i][j] = 0;
     }
 }
 
-int *AdjacencyMatrix::GetConnectedVerticesBy(const int edgeNumber) const {
+int *IncidenceMatrix::GetConnectedVerticesBy(const int edgeNumber) const {
     auto * vertices = new int[2];
 
     for(int i = 0; i < m_matrix.size(); ++i) {

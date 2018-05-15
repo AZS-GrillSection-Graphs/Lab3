@@ -1,17 +1,14 @@
-//
-// Created by os8 on 10.05.18.
-//
-
 #ifndef GRAPHS3_NEWSTRUCTURE_ADJACENCYMATRIX_H
 #define GRAPHS3_NEWSTRUCTURE_ADJACENCYMATRIX_H
 
 #include <vector>
 
-class AdjacencyMatrix {
+class IncidenceMatrix {
 public:
-    AdjacencyMatrix(const int numberOfVerices, const int numberOfEdges);
+    IncidenceMatrix(const int numberOfVerices, const int numberOfEdges);
 
     void Print() const;
+    void SaveToFile(const char *fileName) const;
     bool DoesEdgeExist(const int firstVertex, const int secondVertex) const;
     int GetNumberOfVertices() const {return m_matrix.size();}
     int GetIndexOfEdge(const int firstVertex, const int secondVertex) const;

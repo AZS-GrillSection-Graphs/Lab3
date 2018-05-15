@@ -1,7 +1,3 @@
-//
-// Created by os8 on 10.05.18.
-//
-
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>
@@ -12,10 +8,10 @@
 RandomSimpleConsistentGraph::RandomSimpleConsistentGraph() {
     srand(time(0));
 
-    int numberOfVertices = rand() % 8 + 3;                                     //restrictions for tests
+    int numberOfVertices = rand() % 10 + 3;                                     //restrictions for tests
     int numberOfEdges = rand() % (numberOfVertices - 1) * (numberOfVertices - 2) / 2 + (numberOfVertices - 1);
 
-    m_adjacencyMatrix = new AdjacencyMatrix(numberOfVertices, numberOfEdges);
+    m_incidenceMatrix = new IncidenceMatrix(numberOfVertices, numberOfEdges);
     RandomlyFillAdjacencyMatrix(numberOfVertices, numberOfEdges);
 
     m_edgeWeights = new std::vector<int>;
@@ -31,7 +27,7 @@ void RandomSimpleConsistentGraph::GenerateRandomWeights(int numberOfEdges) const
 
 void RandomSimpleConsistentGraph::RandomlyFillAdjacencyMatrix(int numberOfVertices, int numberOfEdges) {
     do {
-        m_adjacencyMatrix->ResetMatrix();
+        m_incidenceMatrix->ResetMatrix();
 
         int firstVerticle;
         int secondVerticle;
@@ -41,16 +37,16 @@ void RandomSimpleConsistentGraph::RandomlyFillAdjacencyMatrix(int numberOfVertic
                 firstVerticle = rand() % numberOfVertices;
                 secondVerticle = rand() % numberOfVertices;
             }
-            while(firstVerticle == secondVerticle || m_adjacencyMatrix->DoesEdgeExist(firstVerticle, secondVerticle));
+            while(firstVerticle == secondVerticle || m_incidenceMatrix->DoesEdgeExist(firstVerticle, secondVerticle));
 
-            m_adjacencyMatrix->MakeEdge(firstVerticle, secondVerticle);
+            m_incidenceMatrix->MakeEdge(firstVerticle, secondVerticle);
         }
     } while(NumberOfComponents() != 1);
 }
 
 std::vector <int> RandomSimpleConsistentGraph::Components() {
     int componentNumber = -1;
-    std::vector <int> componentsOfVerticles(m_adjacencyMatrix->GetNumberOfVertices(), -1);
+    std::vector <int> componentsOfVerticles(m_incidenceMatrix->GetNumberOfVertices(), -1);
 
     for(int i = 0; i < componentsOfVerticles.size(); i++) {
         if(componentsOfVerticles[i] == -1) {
