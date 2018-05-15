@@ -17,9 +17,17 @@ AdjacencyMatrix::AdjacencyMatrix(const int numberOfVerices, const int numberOfEd
 }
 
 void AdjacencyMatrix::Print() const {
+    std::cout << "V\\E\t";
+    for(int j = 0; j < m_matrix[0].size(); j++)
+        std::cout << j << " \t";
+    std::cout << std::endl;
+    std::cout << std::endl;
+
     for(int i = 0; i < m_matrix.size(); i++) {
+        std::cout << i << ":\t";
+
         for(int j = 0; j < m_matrix[i].size(); j++)
-            std::cout << m_matrix[i][j] << "  ";
+            std::cout << m_matrix[i][j] << "\t";
 
         std::cout << std::endl;
     }
@@ -105,7 +113,6 @@ void AdjacencyMatrix::RandomizeEdges() {
 
     m_matrix[endOfSecondEdge][secondEdge] = 0;
     m_matrix[endOfFirstEdge][secondEdge] = 1;
-
 }
 
 int AdjacencyMatrix::GetEndOfEdge(int firstEdge, int startOfFirstEdge) const {
@@ -135,4 +142,17 @@ void AdjacencyMatrix::ResetMatrix() {
         for(int j = 0; j < m_matrix[i].size(); j++)
             m_matrix[i][j] = 0;
     }
+}
+
+int *AdjacencyMatrix::GetConnectedVerticesBy(const int edgeNumber) const {
+    auto * vertices = new int[2];
+
+    for(int i = 0; i < m_matrix.size(); ++i) {
+        if ( m_matrix[i][edgeNumber] ) {
+            *vertices = i;
+            vertices++;
+        }
+    }
+    vertices -= 2;
+    return vertices;
 }

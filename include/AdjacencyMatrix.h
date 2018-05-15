@@ -20,6 +20,9 @@ public:
     void MakeEdge(const int firstVertex, const int secondVertex);
     void ResetMatrix();
 
+    std::vector<std::vector<int>> CopyOfMatrix() const { return m_matrix;}
+    int* GetConnectedVerticesBy(const int edgeNumber) const;
+
 private:
     std::vector<std::vector<int>> m_matrix;
 

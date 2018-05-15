@@ -12,7 +12,7 @@
 RandomSimpleConsistentGraph::RandomSimpleConsistentGraph() {
     srand(time(0));
 
-    int numberOfVertices = rand() % 10 + 3;                                     //restrictions for tests
+    int numberOfVertices = rand() % 8 + 3;                                     //restrictions for tests
     int numberOfEdges = rand() % (numberOfVertices - 1) * (numberOfVertices - 2) / 2 + (numberOfVertices - 1);
 
     m_adjacencyMatrix = new AdjacencyMatrix(numberOfVertices, numberOfEdges);
@@ -47,7 +47,6 @@ void RandomSimpleConsistentGraph::RandomlyFillAdjacencyMatrix(int numberOfVertic
         }
     } while(NumberOfComponents() != 1);
 }
-
 
 std::vector <int> RandomSimpleConsistentGraph::Components() {
     int componentNumber = -1;

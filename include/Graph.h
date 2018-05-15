@@ -17,6 +17,9 @@ public:
     void Print() const;
     void DijkstraWithPrint(const int chosenVertex);
     void PrintCostMatrix();
+    int FindGraphCenter();
+    int FindMinimaxGraphCenter();
+    void PrimWithPrint(const int choosenVertex);
 
 protected:
     AdjacencyMatrix * m_adjacencyMatrix;
@@ -29,6 +32,7 @@ protected:
     void Relax(std::vector<int> &costArray, std::vector<int> &predecessorsArray, const int firstVertex, const int secondVertex);
     std::vector<std::vector<int>> SetCostMatrix();
     std::vector<int> Dijkstra(const int chosenVertex);
+    int GetLightestEdge(std::vector<int> &visited, std::vector<std::vector<int>> &adjacencyMatrix);
 };
 
 
