@@ -42,6 +42,8 @@ protected:
     void SaveMSTToFile(const char string[22], std::vector<std::vector<int>> vector1);
     void SaveWeightsToFile(const char* fileName) const;
     void DrawMSTOnScreen();
+
+    void SaveMSTWeightsToFile(const char *fileName, std::vector<int> &weights);
 };
 
 

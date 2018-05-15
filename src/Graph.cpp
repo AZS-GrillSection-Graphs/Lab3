@@ -199,6 +199,7 @@ void Graph::PrimWithPrint(const int choosenVertex) {
     std::vector<std::vector<int>> copyOfIncidenceMatrix = m_incidenceMatrix->CopyOfMatrix();
     const int verticesNumber = m_incidenceMatrix->GetNumberOfVertices();
     std::vector<std::vector<int>> minimalSpanningTree(verticesNumber);
+    std::vector<int> weightsMST;
 
     visitedVertices.emplace_back(choosenVertex);
 
@@ -211,6 +212,7 @@ void Graph::PrimWithPrint(const int choosenVertex) {
         else
             visitedVertices.emplace_back(connectedVertices[1]);
 
+        weightsMST.emplace_back((*m_edgeWeights)[lightestEdge]);
         UpdateMST(minimalSpanningTree, connectedVertices);
 
         copyOfIncidenceMatrix[connectedVertices[0]][lightestEdge] = 0;
@@ -219,6 +221,7 @@ void Graph::PrimWithPrint(const int choosenVertex) {
     }
 
     printMST(minimalSpanningTree);
+    SaveMSTWeightsToFile("WektorWag.txt", weightsMST);
     SaveMSTToFile("MacierzIncydencji.txt", minimalSpanningTree);
     DrawMSTOnScreen();
 }
@@ -300,7 +303,7 @@ void Graph::SaveMSTToFile(const char fileName[22], std::vector<std::vector<int>>
 }
 
 void Graph::DrawMSTOnScreen() {
-    std::__cxx11::string drawing = "python3 GraphVisualization.py MacierzIncydencji.txt";
+    std::__cxx11::string drawing = "python3 GraphWeightsVisualization.py MacierzIncydencji.txt WektorWag.txt";
     system(drawing.c_str());
 }
 
@@ -323,5 +326,25 @@ void Graph::SaveWeightsToFile(const char *fileName) const {
         }
 
         file.close();
+}
 
+void Graph::SaveMSTWeightsToFile(const char *fileName, std::vector<int> &weights) {
+    std::ofstream file;
+
+    if (!file.is_open())
+    {
+        file.open(fileName, std::ios::out);
+        if(!file)
+        {
+            std::cerr << "Failed to open " << fileName << std::endl;
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    for(int i = 0; i < weights.size(); i++) {
+        file << weights[i] << "\n";
+        file << std::endl;
+    }
+
+    file.close();
 }
