@@ -12,7 +12,7 @@ RandomSimpleConsistentGraph::RandomSimpleConsistentGraph() {
     int numberOfEdges = rand() % (numberOfVertices - 1) * (numberOfVertices - 2) / 2 + (numberOfVertices - 1);
 
     m_incidenceMatrix = new IncidenceMatrix(numberOfVertices, numberOfEdges);
-    RandomlyFillAdjacencyMatrix(numberOfVertices, numberOfEdges);
+    RandomlyFillIncidenceMatrix(numberOfVertices, numberOfEdges);
 
     m_edgeWeights = new std::vector<int>;
     GenerateRandomWeights(numberOfEdges);
@@ -25,7 +25,7 @@ void RandomSimpleConsistentGraph::GenerateRandomWeights(int numberOfEdges) const
     }
 }
 
-void RandomSimpleConsistentGraph::RandomlyFillAdjacencyMatrix(int numberOfVertices, int numberOfEdges) {
+void RandomSimpleConsistentGraph::RandomlyFillIncidenceMatrix(int numberOfVertices, int numberOfEdges) {
     do {
         m_incidenceMatrix->ResetMatrix();
 

@@ -267,8 +267,9 @@ bool Graph::isVisited(std::vector<int> &visited, const int vertex) const {
 
 void Graph::DrawOnScreen() const {
     m_incidenceMatrix->SaveToFile("MacierzIncydencji.txt");
+    SaveWeightsToFile("WektorWag.txt");
 
-    std::__cxx11::string drawing = "python3 GraphVisualization.py MacierzIncydencji.txt";
+    std::__cxx11::string drawing = "python3 GraphWeightsVisualization.py MacierzIncydencji.txt WektorWag.txt";
     system(drawing.c_str());
 }
 
@@ -301,4 +302,26 @@ void Graph::SaveMSTToFile(const char fileName[22], std::vector<std::vector<int>>
 void Graph::DrawMSTOnScreen() {
     std::__cxx11::string drawing = "python3 GraphVisualization.py MacierzIncydencji.txt";
     system(drawing.c_str());
+}
+
+void Graph::SaveWeightsToFile(const char *fileName) const {
+        std::ofstream file;
+
+        if (!file.is_open())
+        {
+            file.open(fileName, std::ios::out);
+            if(!file)
+            {
+                std::cerr << "Failed to open " << fileName << std::endl;
+                exit(EXIT_FAILURE);
+            }
+        }
+
+        for(int i = 0; i < m_edgeWeights->size(); i++) {
+                file << (*m_edgeWeights)[i] << "\n";
+            file << std::endl;
+        }
+
+        file.close();
+
 }

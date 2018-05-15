@@ -40,6 +40,7 @@ protected:
     bool isVisited(std::vector<int> &visited, const int vertex) const;
     void printMST(const std::vector<std::vector<int>> &minimalSpanningTree) const;
     void SaveMSTToFile(const char string[22], std::vector<std::vector<int>> vector1);
+    void SaveWeightsToFile(const char* fileName) const;
     void DrawMSTOnScreen();
 };
 
